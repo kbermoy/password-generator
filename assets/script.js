@@ -7,12 +7,32 @@ var specialCharOption = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")"];
 var numericChar = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
 // create functionality containing the user's decisions, which we will then use the gathered values as an object
-function generatePassword() {
+function generatePasswordOption() {
   // Variable to store length pf password from user input
-  var length = parseInt(
-    window.prompt("How many characters would you like your password to contain?")
+  var length = (
+    window.prompt("How many characters would you like your password to contain? Enter a # from 0-9")
   );
-
+console.log(length);
+console.log(typeof length);
+  // write conditional statement here that handles the results of the user input that is NaN [in your conditional statement make sure to alert the user and return null]
+  if (length === length) {
+    window.alert("Not Valid!")
+  } else {
+    " "
+  };
+  // write conditional statement here that handles a number less than 8
+  if (length < 8) {
+    return;
+  } else {
+    " "
+  };
+  // write conditional statement here that handles a number greater than 128
+  if (length > 128) {
+    return;
+  } else {
+    " "
+  };
+  
   var hasSpecialChar = confirm(
     "Click OK to confrim including SPECIAL CHARACTERS."
   );
@@ -22,7 +42,13 @@ function generatePassword() {
   var hasUpperCaseChar = confirm(
     "Click OK to confirm including UPPER CASE CHARACTERS."
   );
+  var hasNumericChar = confirm(
+    "Click OK to confirm including NUMERIC CHARACTERS"
+  );
+};
 
+  /* review code with TA
+  
   if (hasSpecialChar == true) {
     var indexSpecialChar = Math.floor(Math.random() * specialCharOption.length);
     var randomSpecialChar = specialCharOption[indexSpecialChar];
@@ -41,14 +67,20 @@ function generatePassword() {
     window.alert("Password will include " + randomUpperCase);
   } else {
   };
-};
-var password = generatePassword(); 
-  var passwordText = document.querySelector("#password");
+  if (hasNumericChar == true) {
+    var indexNumericChar = Math.floor(Math.random() * numericChar.length);
+    var randomNumericChar = numericChar[indexNumericChar];
+    window.alert("Password will include " + randomNumericChar);
+  }
+}; */ 
+
+var password = generatePasswordOption(); 
+var passwordText = document.querySelector("#password");
 
 passwordText.value = password; 
 
 // Event listener to generate button
-generateBtn.addEventListener("click", writePassword);
+generateBtn.addEventListener("click", generatePasswordOption);
 
 
 
