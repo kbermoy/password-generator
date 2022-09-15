@@ -1,88 +1,102 @@
-// Assignment Code
-var generateBtn = document.querySelector("#generate");
+var passwordText = document.getElementById("password");
 
-var length = ["8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95", "96", "97", "98", "99", "100", "101", "102", "103", "104", "105", "106", "107", "108", "109", "110", "111", "112", "113", "114", "115", "116", "117", "118", "119", "120", "121", "122", "123", "124", "125", "126", "127", "128"];
+const randomFunc = {
+  lower: getRandomLower,
+  upper: getRandomUpper,
+  number: getRandomNumber,
+  special: getRandomSpecial 
+}
 
-//Create the Window Prompts
-const hasLowerCase = confirm (
-  "Click OK to confirm including LOWER CASE CHARACTERS."
-);
-const hasNumericChar = confirm(
-  "Click OK to confirm including NUMERIC CHARACTERS."
-)
-const hasSpecialChar = confirm (
-  "Click OK to confirm including SPECIAL CHARACTERS."
-);
-const hasUpperCase = confirm(
-  "Click OK to confirm including UPPER CASE CHARACTERS."
-);
-const passwordLength = window.prompt(
-  "Enter a number betwee 8-128 for your password length."
-);
-
-//Put Promps into one object
-const promptsConfirm = [
-  {hasLowerCase},
-  {hasNumericChar},
-  {hasSpecialChar},
-  {hasUpperCase},
-  {passwordLength}
-
-  //password.innerText = generatePassword
-];
-console.log(promptsConfirm),
-
-/* DOM Elements
-const passwordEl = document.getElementById('password');
-const lengthtEl = document.getElementById('length');
-const uppercaseEl = document.getElementById('uppercase');
-const lowercaseEl = document.getElementById('lowercase');
-const numbersEl = document.getElementById('numbers');
-const specialsEl = document.getElementById('specials');
-const generateEl = document.getElementById('generate');
-*/
-
-/* const randomFun = {
-  lower: getRandomLower(), //(this it a key called lower)
-  upper: getRandomUpper(),  //(this is a key called upper)
-  number: getRandomNumber(),
-  special: getRandomSpecial()
+// create a function as a container to hold the window prompts
+function writePassword() {
+  var passwordLength = window.prompt (
+    'Enter a number from 8-128 for you password lenght'
+  );
+  if (passwordLength < 8) {
+    window.alert("Length has to be greater than 8")
+    return;
+  }
+  else if (passwordLength > 128) {
+    window.alert("Length has to be less than 128")
+    return;
+  }
+  var hasLowerCase = confirm (
+    'Click OK to confrim including LOWER CASE CHARACTERS.'
+  );
+  var hasUpperCase = confirm (
+    'Click OK to confrim including UPPER CASE CHARACTERS.'
+  );
+  var hasNumericChar = confirm (
+    'Click OK to confrim including NUMERIC CHARACTERS.'
+  );
+  var hasSpecialChar = confirm (
+    'Click OK to confirm including SPECIAL CHARACTERS.'
+  );
+  
+  //console.log(hasLowerCase, hasUpperCase, hasNumericChar, hasSpecialChar, passwordLength);
+  passwordText.innerText = generatePassword(hasLowerCase, hasUpperCase, hasNumericChar, hasSpecialChar, passwordLength); //still need to create function 'generatePassword
 };
-*/
 
-generateEl.addEventListener('click', () => {
-  const length = lengthtEl.value;
-
-  console.log(length);
-})
-
-// Create functions to get the random characters
-function getRandomLower () {
-  return String.fromCharCode(Math.floor(Math.random() * 26) + 97);
+function generatePassword(lower, upper, number, special, passwordLength) {
+  let generatedPassword = '';
+  const typesCount = lower + upper + number + special;
+  const typesArr = []
+  if (lower === true) {
+    typesArr.push(getRandomLower)
+  }
+  if (upper === true) {
+    typesArr.push(getRandomUpper)
+  }
+  if (number === true) {
+    typesArr.push(getRandomNumber)
+  }
+  if (special === true) {
+    typesArr.push(getRandomSpecial)
+  }
+ var password = ''
+  console.log("Types Array: " + typesArr);
+  for(let i=0; i<passwordLength; i++) {
+    password += typesArr[Math.floor(Math.random() * typesArr.length)]()
+  }
+ return password;
 }
 
-function getRandomUpper () {
-  return String.fromCharCode(Math.floor(Math.random() * 26 ) + 65);
-}
+// add event listener to generate btn
+document.getElementById("generate").addEventListener("click", writePassword);
 
-function getRandomNumber () {
-  const numbers = "1234567890";
-  return numbers[Math.floor(Math.random() * numbers.length)];
+function getRandomLower() {
+	return String.fromCharCode(Math.floor(Math.random() * 26) + 97);
 }
-
+function getRandomUpper() {
+  return String.fromCharCode(Math.floor(Math.random() * 26) + 65);
+}
+function getRandomNumber() {
+  return +String.fromCharCode(Math.floor(Math.random() * 10) + 48);
+}
 function getRandomSpecial() {
-  const specials = "!@#$%^&*(){}[]=<>/,.";
+  const specials = '!@#$%^&*(){}[]=<>/,.'
   return specials[Math.floor(Math.random() * specials.length)];
 }
+//console.log(getRandomSpecial());
 
-// Write password to the #password input
-function writePassword() {
-  var password = generatePassword();
-  var passwordText = document.querySelector("#password");
+// check if user confirmed each prompts and check length  
 
-  passwordText.value = password;
 
-}
+// we want to see a true/false in console to see if the user confirms
+//then want to pass these into a function'generatePassword' 
+//then put function 'generatePassword' into the Secure Password by using a DOM element (which is password)
+//exp: passwordEl.innerText = generatePassword(hasLower,hasUpper,etc);
 
-// Add event listener to generate button
-generateBtn.addEventListener("click", writePassword);
+//generate password function using:
+// function generatePassword (lower, upper, number, special, length) {}
+// this function will take all the info from the above
+// 1. initialize a password variable
+// 2. filter out checked unconfirmed types
+		// do this by using Object.values(item)[0]
+		// also want to check if all are not confirmed
+// 3. loop over the length, call generator function for each type
+// 4. add final password to the password variable and return
+		// use return finalPassword;
+		// which is returning the finalPassword from the generatePassword function, which is going to put into the result
+
+// create functions to get the random character and put it into an object
