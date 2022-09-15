@@ -77,26 +77,3 @@ function getRandomSpecial() {
   const specials = '!@#$%^&*(){}[]=<>/,.'
   return specials[Math.floor(Math.random() * specials.length)];
 }
-//console.log(getRandomSpecial());
-
-// check if user confirmed each prompts and check length  
-
-
-// we want to see a true/false in console to see if the user confirms
-//then want to pass these into a function'generatePassword' 
-//then put function 'generatePassword' into the Secure Password by using a DOM element (which is password)
-//exp: passwordEl.innerText = generatePassword(hasLower,hasUpper,etc);
-
-//generate password function using:
-// function generatePassword (lower, upper, number, special, length) {}
-// this function will take all the info from the above
-// 1. initialize a password variable
-// 2. filter out checked unconfirmed types
-		// do this by using Object.values(item)[0]
-		// also want to check if all are not confirmed
-// 3. loop over the length, call generator function for each type
-// 4. add final password to the password variable and return
-		// use return finalPassword;
-		// which is returning the finalPassword from the generatePassword function, which is going to put into the result
-
-// create functions to get the random character and put it into an object
